@@ -1,0 +1,11 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/OCleaner/.vs/CopilotSnapshots
+/.vs
+/OCleaner/.vs
+/OCleaner/WpfApp1/bin/Debug/net10.0-windows
+/OCleaner/WpfApp1/obj
+/OCleaner/OCleaner/bin/Debug/net10.0-windows
+/OCleaner/OCleaner/obj
