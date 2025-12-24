@@ -93,7 +93,8 @@ namespace WpfApp1
 
             try
             {
-                var results = await _scanner.ScanAsync(_cts.Token);
+                var progress = new Progress<double>(p => { Dispatcher.Invoke(() => ProgressValue = p); });
+                var results = await _scanner.ScanAsync(_cts.Token, progress);
                 _found = results;
 
                 _displayItems = _found.Select(f => new DisplayItem(f, FormatSize(f.Size))).ToList();

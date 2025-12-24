@@ -16,12 +16,12 @@ namespace WpfApp1.Services
             ".tmp", ".log", ".cache", ".bak", ".old", ".crdownload", ".part", ".dmp"
         };
 
-        public async Task<List<FoundFile>> ScanAsync(CancellationToken cancellationToken = default)
+        public async Task<List<FoundFile>> ScanAsync(CancellationToken cancellationToken, IProgress<Double> progress)
         {
-            return await Task.Run(() => ScanInternal(cancellationToken), cancellationToken);
+            return await Task.Run(() => ScanInternal(cancellationToken, progress), cancellationToken);
         }
 
-        private List<FoundFile> ScanInternal(CancellationToken cancellationToken)
+        private List<FoundFile> ScanInternal(CancellationToken cancellationToken, IProgress<Double> progress)
         {
             var results = new List<FoundFile>();
 
@@ -54,8 +54,15 @@ namespace WpfApp1.Services
             }
             catch { }
 
+            progress.Report(.3);
+
+            int progressSteps = candidateDirs.Count;
+
+            double currentStep = 0.3;
+
             foreach (var (dir, category) in candidateDirs.Where(d => !string.IsNullOrWhiteSpace(d.Path)).DistinctBy(d => d.Path))
             {
+                progress.Report(currentStep + .2);
                 if (cancellationToken.IsCancellationRequested)
                     break;
 
